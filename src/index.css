@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "VT323", monospace;
+  --font-pixel: "Press Start 2P", monospace;
+}
+
+body {
+  background-color: #000;
+  color: #0ff;
+  font-family: var(--font-mono);
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+/* Glitch text effect */
+.glitch-text {
+  position: relative;
+  color: #fff;
+  text-shadow: 2px 0 #0ff, -2px 0 #f0f;
+  animation: text-flicker 3s infinite;
+}
+.glitch-text::before, .glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 #f0f;
+  clip-path: inset(20% 0 80% 0);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+  left: -2px;
+  text-shadow: 2px 0 #0ff;
+  clip-path: inset(80% 0 5% 0);
+  animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
+  20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+  40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+  80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+  100% { clip-path: inset(30% 0 50% 0); transform: translate(1px, -1px); }
+}
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
+  20% { clip-path: inset(30% 0 20% 0); transform: translate(-2px, 1px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, -2px); }
+  60% { clip-path: inset(20% 0 50% 0); transform: translate(-2px, 2px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+  100% { clip-path: inset(5% 0 80% 0); transform: translate(-1px, 1px); }
+}
+
+@keyframes text-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0; }
+}
+
+/* Screen tearing */
+.screen-tear {
+  animation: tear 5s infinite;
+}
+@keyframes tear {
+  0%, 95% { transform: skewX(0deg); }
+  96% { transform: skewX(5deg) translateX(-5px); }
+  97% { transform: skewX(-5deg) translateX(5px); }
+  98% { transform: skewX(0deg); }
+}
+
+/* Scanlines */
+.scanlines {
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.3));
+  background-size: 100% 4px;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Jarring borders */
+.border-glitch {
+  border: 2px solid #0ff;
+  box-shadow: 4px 4px 0 #f0f, -2px -2px 0 #000;
+}
+.border-glitch-alt {
+  border: 2px solid #f0f;
+  box-shadow: -4px 4px 0 #0ff, 2px -2px 0 #000;
+}
+
+/* CRT Flicker */
+.crt-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 255, 255, 0.02);
+  pointer-events: none;
+  z-index: 49;
+  animation: crt-flicker 0.15s infinite;
+}
+@keyframes crt-flicker {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+/* EQ Animation */
+@keyframes eq {
+  0% { height: 10%; }
+  50% { height: 100%; }
+  100% { height: 10%; }
+}
+.eq-bar {
+  animation: eq 0.4s infinite alternate;
+}
